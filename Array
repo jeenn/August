@@ -2,30 +2,30 @@
 #include <stdlib.h>
 #include <time.h>    // time library srand() and rand() functions
 int main(){
-	int n,arr[2100000],i=0; //array's size = 2,100,000
+	int n,array[2000000],i=0; //array's size = 2,000,000
 	printf("Type the size you want the array to be:");
 	scanf("%d",&n);
 	srand(time(NULL));
   while(i<n){
-  	int randomn= rand()%10;
-  	arr[i]=randomn;
-		printf("El numero %d random es:%d\n",i,randomn);
-		i++;
+	  int random= rand()%10; //generates random number between 0 and 10
+  	array[i]=random;
+		printf("The %d place has the following random number assigned %d\n",i,random);
+		i++; //increases the position in the array
   }
-  printf("Ingrese el numero que desea buscar: ");
-  int val=0;
-	scanf("%d",&val);
+  printf("Which number would you like to search ");
+  int value=0;
+	scanf("%d",&value);
   i=0;
-	int estaEnElArreglo=0;
+	int foundOnArray=0;
   while(i<n){
-  	if(arr[i]==val){
-  		printf("El valor aleatorio en la posicion %d  es %d \n",i,val);
-			estaEnElArreglo=1;
+  	if(array[i]==value){ //If the number of the array is the same one as value, the position is obtained
+  		printf("The position %d holds the value:  %d \n",i,value);
+			foundOnArray=1;
 		}
 		i++; //increase i in order to read the hole array
-  }
-	if(!estaEnElArreglo){
-	printf("El valor %d no se encuentra en el arreglo\n", val);
-  return 0;
+  }//once all the array has been read it can be displayed a message showing if the number/value couldn't be found in the array
+	if(!foundOnArray){
+		printf("Sorry, the value %d can't be found in the array\n", value);
+  	return 0;
   }
 }
