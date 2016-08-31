@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>    // time library srand() and rand() functions
+int main(){
+	int n,arr[2100000],i=0; //array's size = 2,100,000
+	printf("Type the size you want the array to be:");
+	scanf("%d",&n);
+	srand(time(NULL));
+  while(i<n){
+  	int randomn= rand()%10;
+  	arr[i]=randomn;
+		printf("El numero %d random es:%d\n",i,randomn);
+		i++;
+  }
+  printf("Ingrese el numero que desea buscar: ");
+  int val=0;
+	scanf("%d",&val);
+  i=0;
+	int estaEnElArreglo=0;
+  while(i<n){
+  	if(arr[i]==val){
+  		printf("El valor aleatorio en la posicion %d  es %d \n",i,val);
+			estaEnElArreglo=1;
+		}
+		i++; //increase i in order to read the hole array
+  }
+	if(!estaEnElArreglo){
+	printf("El valor %d no se encuentra en el arreglo\n", val);
+  return 0;
+  }
+}
