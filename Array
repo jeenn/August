@@ -8,9 +8,8 @@ int main(){
 	srand(time(NULL));//generates random numbers everytime the program is executed
  //clock_t ini = clock();
 	while(i<size){
-	  int random= rand()%10; //generates random number between 0 and 10
-  	array[i]=random;
-		printf(" \t The %dº place has the %d random number assigned\n",i,random);
+	  array[i]= rand()%10; //generates random number between 0 and 10
+		printf(" \t The %dº place has the %d random number assigned\n",i,array[i]);
 		i++; //increases the position in the array
   }
   printf("Which number would you like to search? ");
