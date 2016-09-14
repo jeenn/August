@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+
+
+int main(){
+	int largo = 0;
+	int suma_pares = 0;
+	int suma_impares = 0;
+	int numero_pares = 0;
+	int numero_datos = 1;
+	int dato = 0;
+	int promedio_pares = 0;
+	int i;
+	int indice = 0;
+	srand(time(NULL));
+
+	scanf("%i",&largo);
+	int arreglo[largo];
+	for(i = 0; i < largo; i++){
+		arreglo[i] = rand()%10;
+		printf("%d ", arreglo[i]);	
+	}
+
+	while(numero_datos<=largo){
+		//scanf("%d",&dato);
+		dato = arreglo[indice];
+		numero_datos++;
+		if(dato!=0){
+			if((dato%2)==0){
+				suma_pares = suma_pares + dato;
+				numero_pares++;
+			}
+			else
+				suma_impares = suma_impares + dato;
+		}
+	indice ++;
+
+	}
+	
+	if(numero_pares>0)
+		promedio_pares = suma_pares/numero_pares;
+	printf("\n\nPromedio pares: %d\nSuma impares: %d\n", promedio_pares, suma_impares);
+	
+
+}
