@@ -28,7 +28,7 @@ int main(){
     }//once all the array has been read it can be displayed a message showing if the number/value couldn't be found in the array
     printf("The runtime was: %f\n",((double)clock()-start)/CLOCKS_PER_SEC);
     if(!foundOnArray){
-        printf("\t Sorry, the value %d can't be found in the array\n", search_num);
+        printf("\t Sorry, the value %d couldn't be found on the array\n", search_num);
         return 0;
     }
 }
