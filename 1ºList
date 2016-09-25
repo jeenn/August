@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <time.h>     // time library srand() and rand() functions
 
 struct list_struct{
     int value;
@@ -12,11 +12,11 @@ struct list_struct *head, *tail;
 int main(){
     int size=0, search_num=0, i=0, random;
     clock_t start=clock();
-    
+
     struct list_struct *ptr;
     struct list_struct *head = NULL;
     struct list_struct *tail = NULL;
-    
+
     printf("Type the size you want the list to be: ");
     scanf("%d",&size);
     srand(time(NULL));//generates random numbers everytime the program is executed
@@ -61,5 +61,5 @@ int main(){
         printf("\t Sorry, the value %d couldn't be found on the list\n", search_num);
         return 0;
     }
-    
+
 }
