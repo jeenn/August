@@ -2,30 +2,33 @@
 #include <stdlib.h>
 #include <time.h>    // time library srand() and rand() functions
 int main(){
-	int size,array[2000000],i=0; //array's size = 2,000,000
-	printf("Type the size you want the array to be: ");
-	scanf("%d",&size);
-	srand(time(NULL));//generates random numbers everytime the program is executed
- //clock_t ini = clock();
-	while(i<size){
-	  array[i]= rand()%10; //generates random number between 0 and 10
-		printf(" \t The %dº place has the %d random number assigned\n",i,array[i]);
-		i++; //increases the position in the array
-  }
-  printf("Which number would you like to search? ");
-  int search_num=0;
-	scanf("%d",&search_num);
-  i=0;
-	int foundOnArray=0;
-  while(i<size){
-  	if(array[i]==search_num){ //If the number of the array is the same one as value, the position is obtained
-  		printf("\t The %dº position holds the value:  %d \n",i,search_num);
-			foundOnArray=1;
-		}
-		i++; //increase i in order to read the hole array
-  }//once all the array has been read it can be displayed a message showing if the number/value couldn't be found in the array
-	if(!foundOnArray){
-		printf("\t Sorry, the value %d can't be found in the array\n", search_num);
-  	return 0;
-  }
+    int size,array[2000000],i=0; //array's size = 2,000,000
+    clock_t start=clock();
+    
+    printf("Type the size you want the array to be: ");
+    scanf("%d",&size);
+    srand(time(NULL));//generates random numbers everytime the program is executed
+    //clock_t ini = clock();
+    while(i<size){
+        array[i]= rand()%10; //generates random number between 0 and 10
+        printf(" \t The %dº place has the %d random number assigned\n",i,array[i]);
+        i++; //increases the position in the array
+    }
+    printf("Which number would you like to search? ");
+    int search_num=0;
+    scanf("%d",&search_num);
+    i=0;
+    int foundOnArray=0;
+    while(i<size){
+        if(array[i]==search_num){ //If the number of the array is the same one as value, the position is obtained
+            printf("\t The %dº position holds the value:  %d \n",i,search_num);
+            foundOnArray=1;
+        }
+        i++; //increase i in order to read the hole array
+    }//once all the array has been read it can be displayed a message showing if the number/value couldn't be found in the array
+    printf("The runtime was: %f\n",((double)clock()-start)/CLOCKS_PER_SEC);
+    if(!foundOnArray){
+        printf("\t Sorry, the value %d can't be found in the array\n", search_num);
+        return 0;
+    }
 }
