@@ -1,80 +1,66 @@
-
-#include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <stdio.h>
+#include <time.h>    // time library srand() and rand() functions
 
-typedef struct node {
-   int data;
-   struct node *next;
-} tipoNodo;
+typedef struct Node {
+    int data;
+    struct Node *next;
+} NodeType;
 
-typedef tipoNodo *ptr;
-typedef tipoNodo *Stack;
+typedef NodeType *objNode;
+typedef NodeType *Stack;
 
 void Push(Stack *l, int aux);
 int Pop(Stack *l);
-//int Print(Stack *head, int u);
 
 int main() {
-   Stack head = NULL;
-
-   int random, size=0, i=0, search_num=0; //declaration of variables
-   random=rand() % 10;
-   printf("Type the size you want the stack to be: ");
-   scanf("%d",&size);
-   srand(time(NULL));//generates random numbers everytime the program is executed
-   for(i=0;i<size;i++){
-      random=rand() % 10;
-      printf("\t The %dº place on the stack has the %d random number assigned\n",i,random);
-      Push(&head,random);
-   }
-   printf("Which number would you like to search? \n");
-   scanf("%d",&search_num);
-   for(i=0;i<size;i++){
-      if(Pop(&head)==search_num){
-        printf("\t Value poped out of the stack: %d. Position %d \n",search_num,i);
-        break;
-      }
-      else
-        printf("\t Sorry, the value %d can't be found in the array\n", search_num);
-        break;
-   }
-   //printf("The new stack:\n");
-   // Print(&head, u);
-   return 0;
-}
-   void Push(Stack *head, int aux) {
-      ptr link; //create a link
-      link = (ptr)malloc(sizeof(tipoNodo));
-      link->data = aux;
-      link->next = *head; //point first to new first node
-      *head = link;
-   }
-
-   int Pop(Stack *head) {
-      ptr nodo;
-      int aux;
-
-      nodo = *head;
-      if(!nodo)
-        return 0;
-      *head = nodo->next;
-      aux = nodo->data;
-      free(nodo);
-      return aux;
-   }
-
-  /* int Print(Stack *head, int u){
-     ptr nodo;
-     int u;
-     if(nodo==NULL)
-       return 0;
-     else {
-       u=nodo->next;
-       *head=head->data;
-       return head;
-       //  u =nodo->data;
-       //return u;
-      }
+    Stack stack = NULL;
+    
+    clock_t start=clock();
+    
+    int random=0,size=0,pos=0,search_num=0;
+    printf("Type the size you want the stack to be: ");
+    scanf("%d",&size);
+    srand(time(NULL));//generates random numbers everytime the program is executed
+    for(pos=0;pos<size;pos++){
+        random=rand() % 10;
+        printf("\tThe following random number has been assigned to the stack: %d\n",random);
+        Push(&stack,random);
     }
-*/
+    printf("Which number would you like to search on the stack? \n");
+    scanf("\t%d",&search_num);
+   	int foundOnArray=0;
+    for(pos=0;pos<size;pos++){
+        if(Pop(&stack)==search_num){
+            printf("%d poped out of the stack -> position %d \n",search_num,pos);
+            foundOnArray=1;
+        }
+    }
+    printf("The runtime was: %f\n",((double)clock()-start)/CLOCKS_PER_SEC);
+    if(!foundOnArray){
+        printf("\t Sorry, the value %d couldn't be found on the stack\n", search_num);
+        return 0;
+    }
+}
+
+void Push(Stack *stack, int aux) {
+    objNode head;
+    head = (objNode)malloc(sizeof(NodeType));
+    head->data = aux;
+    
+    head->next = *stack;
+    *stack = head;
+}
+
+int Pop(Stack *stack) {
+    objNode node;
+    int aux;
+    
+    node = *stack;
+    if(!node) return 0;
+    
+    *stack = node->next;
+    aux = node->data;
+    free(node);
+    return aux;
+}
