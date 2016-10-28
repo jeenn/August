@@ -1,0 +1,275 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <time.h> // time library for clock() function
+#include <stdio.h>
+
+//Function prototypes
+void printNumbers(int A[],int n);
+int Bubble_Sort(int A[],int n);
+int MBubble_Sort(int A[],int n);
+int Insertion_Sort(int A[],int n);
+int Selection_Sort(int A[],int n);
+int Shell_Sort(int A[],int n);
+
+
+/*****Tree Algorithm*****/
+struct tree{
+   int dato;
+   struct tree *left;
+   struct tree *right;
+}*root;
+
+enum{ FALSO=0, VERDADERO };
+
+void start(void);
+int empty(struct tree *leaf);
+void inorden(struct tree *leaf);
+void menu_looking_for(void);
+int look_for(struct tree *leaf, int num);
+struct tree *insert(struct tree *root, struct tree *leaf, int num);
+
+void start(void){
+   root= NULL;
+}
+
+int empty(struct tree *leaf){
+   if(!leaf)return VERDADERO;
+   return FALSO;
+}
+
+void inorden(struct tree *leaf){
+   if(!leaf) return;
+   inorden(leaf->left);
+   printf("%d ", leaf->dato);
+   inorden(leaf->right);
+}
+
+struct tree *insert( struct tree *root, struct tree *leaf, int num){
+   if(!leaf){
+     leaf=(struct tree *) malloc(sizeof(struct tree));
+     leaf->dato = num;
+     leaf->left = NULL;
+     leaf->right = NULL;
+     if(!root)
+       return leaf;
+     else if(num<root->dato)
+       root->left= leaf;
+     else root->right= leaf;
+       return leaf;
+   }else if(num<leaf->dato)
+	   insert(leaf, leaf->left, num);
+	 else
+     insert(leaf, leaf->right, num);
+	 return root;
+}
+
+/////////////
+int main(){
+
+  //variable declaration
+  FILE *file;
+  char read;
+  int val, option;
+  int temp=0;
+  int i,j;
+  int n=100;
+  int numeros[n];
+
+  clock_t start_t=clock();//global clock declating variable
+  clock_t start_Bubble_Sort=clock();
+  clock_t start_MBubble_Sort=clock();
+  clock_t start_Insertion_Sort=clock();
+  clock_t start_Selection_Sort=clock();
+  clock_t start_Shell_Sort=clock();
+
+  //Menu
+  printf("Choose an option: \n");
+  printf("1.- Sort the numers \n");
+  printf("2.- Exit program \n");
+  scanf("%d",&option);
+
+  i=0;
+  file=fopen("numeros10millones.txt","r"); //function to read the file
+  if (file == NULL){
+    printf("\nFile does not exist\n\n");
+    exit(1);
+  }else{
+    while (feof(file) == 0){
+    read = fscanf(file, "%d", &val);
+    numeros[i]=val;
+    i++;
+      if (val==' ')printf(" ");
+    }
+  }
+  switch(option){
+  start_t = clock();
+		case 1://First case, all types of sort are printed
+            //Numbers sort by Bubble Sort
+            *numeros=Bubble_Sort(numeros,i);
+              printf("\tBubble Sort: ");
+              printNumbers(numeros,i);
+              printf("\n");
+              printf("\tBubble Sort runtime was: %f\n", ((double)(clock() - start_Bubble_Sort)) / CLOCKS_PER_SEC);
+              printf("\n");
+
+            //Numbers sort by Modify Bubble Sort
+            *numeros=MBubble_Sort(numeros,i);
+              printf("\tModified Bubble Sort: ");
+              printNumbers(numeros,i);
+              printf("\n");
+              printf("\tModified Bubble runtime was: %f\n", ((double)(clock() - start_MBubble_Sort)) / CLOCKS_PER_SEC);
+              printf("\n");
+
+            //Numbers sort by Insertion Sort
+            *numeros=Insertion_Sort(numeros,i);
+              printf("\tInsertion Sort: ");
+              printNumbers(numeros,i);
+              printf("\n");
+              printf("\tInsertion Sort runtime was: %f\n",((double)clock()-start_Insertion_Sort)/CLOCKS_PER_SEC);
+              printf("\n");
+
+            //Numbers sort by Selection Sort
+            *numeros=Selection_Sort(numeros,i);
+              printf("\tSelection Sort: ");
+              printNumbers(numeros,i);
+              printf("\n");
+              printf("\tSelection Sort runtime was: %f\n",((double)clock()-start_Selection_Sort)/CLOCKS_PER_SEC);
+              printf("\n");
+
+            //Numberts sort by Shell sort
+            *numeros=Shell_Sort(numeros,i);
+              printf("\tShell Sort: ");
+              printNumbers(numeros,i);
+              printf("\n");
+              printf("\tShell Sort runtime was: %f\n",((double)clock()-start_Shell_Sort)/CLOCKS_PER_SEC);
+              printf("\n");
+
+            //Numbers sort by Tree Sort
+              printf("\tTree Sort: " );
+              file=fopen("numeros.txt","r");
+        				if (file == NULL){
+        					printf("\nFile does not exist\n\n");
+        					exit(1);
+        				}else{
+        					while (feof(file) == 0){
+        						read = fscanf(file, "%d", &val);
+        						if (val==' '){
+        							printf(" ");
+                      printf("%d\n",val );
+        						}else{
+        							root = insert(root, root, val);
+        						}
+        					}
+
+        				}
+        			inorden(root);
+              printf("\n");
+
+            break;
+
+
+		case 2: //second case, the program finishes
+        printf("Bye.\n" );
+        exit(0);
+    break;
+
+		default://default case, wrong option
+			 printf("Sorry, the option %d is unvalid\n", option);
+		break;
+	}
+
+  printf("End of program\n");
+  printf("Total runtime was: %f\n", ((double)(clock() - start_t)) / CLOCKS_PER_SEC);
+
+}
+
+//Algorithms
+
+void printNumbers(int A[],int n){
+	int i=0;
+	for(i=0;i<n;i++)
+	 printf(" %d ",A[i]);
+}
+
+/*****Bubble Sort Algorithm*****/
+int Bubble_Sort(int A[],int n){
+  int i,j,temp;
+	for(i=1;i<n;i++){
+	  for(j=0;j<n-1;j++){
+		  if(A[j]>A[j+1]){
+        temp=A[j];
+				A[j]=A[j+1];
+				A[j+1]=temp;
+			}
+		}
+	}
+	return *A;
+}
+
+/*****Modified Bubble Sort Algorithm*****/
+int MBubble_Sort(int A[],int n){
+	int i=0,j=0,temp=0;
+	for(i=1;i<n;i++){
+		for(j=0;j<i;j++){
+			if(A[i]<A[j]){
+				temp=A[j];
+				A[j]=A[i];
+				A[i]=temp;
+			}
+		}
+	}
+	return *A;
+}
+
+/*****Insertion Sort Algorithm*****/
+int Insertion_Sort(int A[],int n){
+	int i,j,temp;
+    for(i=1; i<n; i++){
+        temp=A[i];
+        j=i-1;
+        while ((A[j]>temp) && (j>=0)){
+        	A[j+1] = A[j];
+          j--;
+        }
+        A[j+1] = temp;
+    }
+    return *A;
+}
+
+/*****Selection Sort Algorithm*****/
+int Selection_Sort(int A[],int n){
+	int k,i,p,temp;
+	for(k=0;k<n-1;k++){
+		p=k;
+		for(i=k+1;i<=n-1;i++){
+			if(A[i]<A[p])
+      p=i;
+		}
+    if(p!=k){
+		  temp=A[p];
+		  A[p]=A[k];
+		  A[k]=temp;
+    }
+	}
+	return *A;
+}
+
+/*****Shell Sort Algorithm*****/
+int Shell_Sort(int A[],int n){
+  int i, j, k, v;
+  k=n/2;
+  while(k>=1){
+    for(i=k; i>=n; i++){
+      v=A[i];
+      j=i-k;
+      while((j>=0)&&(A[j]>v)){
+        A[j+k]=A[j];
+        j-=k;
+      }
+      A[j+k]=v;
+    }
+    k/=2;
+  }
+  return *A;
+}
