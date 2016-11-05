@@ -1,3 +1,0 @@
-# August ends
-Now
-Maybe
